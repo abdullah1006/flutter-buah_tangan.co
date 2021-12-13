@@ -30,10 +30,10 @@ class CustomDrawerController extends GetxController {
     }
   }
 
-  void goToSettings() {
+  void goToProfile() {
     Get.back(closeOverlays: true);
-    if (Get.currentRoute != AppRoute.settingsRoute) {
-      Get.toNamed(AppRoute.settingsRoute);
+    if (Get.currentRoute != AppRoute.profileRoute) {
+      Get.toNamed(AppRoute.profileRoute);
     }
   }
 }

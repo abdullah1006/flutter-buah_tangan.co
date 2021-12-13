@@ -11,6 +11,10 @@ class BagController extends GetxController {
 
   void setCheckAll() {
     checkAll.value = !checkAll.value;
+    item.forEach((element) {
+      element.onCheck = checkAll.value;
+    });
+    item.refresh();
   }
 
   void toOrderingPage() {
@@ -38,4 +42,59 @@ class BagController extends GetxController {
     update();
     super.onInit();
   }
+
+  var item = <ItemBagModel>[
+    ItemBagModel(
+        id: 0,
+        nama: 'Nasi Krawu',
+        harga: 12000,
+        srcGambar: 'assets/images/nasi_krawu.png'),
+    ItemBagModel(
+        id: 1,
+        nama: 'Kue Pudak',
+        harga: 6000,
+        srcGambar: 'assets/images/kue_pudak.png')
+  ].obs;
+
+  void increment(ItemBagModel value) {
+    item.singleWhere((element) => element == value).jumlah++;
+    item.refresh();
+  }
+
+  void decrement(ItemBagModel value) {
+    if (item.singleWhere((element) => element == value).jumlah > 1) {
+      item.singleWhere((element) => element == value).jumlah--;
+    }
+    item.refresh();
+  }
+
+  void delete(ItemBagModel value) {
+    item.removeWhere((element) => element.id == value.id);
+
+    item.refresh();
+  }
+
+  void checkItem(ItemBagModel value) {
+    item.singleWhere((element) => element == value).onCheck =
+        !item.singleWhere((element) => element == value).onCheck;
+    item.refresh();
+  }
+}
+
+class ItemBagModel {
+  String nama;
+  int id;
+  int harga;
+  String srcGambar;
+  int jumlah;
+  bool onCheck;
+
+  ItemBagModel({
+    required this.id,
+    required this.nama,
+    required this.harga,
+    required this.srcGambar,
+    this.jumlah = 1,
+    this.onCheck = false,
+  });
 }

@@ -31,11 +31,11 @@ class HomePage extends StatelessWidget {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => Get.toNamed(AppRoute.shoppingBagRoute),
             icon: SvgPicture.asset('assets/icons/shopping_bag.svg'),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () => Get.toNamed(AppRoute.profileRoute),
             icon: SvgPicture.asset('assets/icons/profile.svg'),
           )
         ],
@@ -131,7 +131,7 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Daftar Populer',
+                  'Makanan Populer',
                   style: mediumLoraBlackStyle,
                 ),
                 Text(
@@ -152,10 +152,12 @@ class HomePage extends StatelessWidget {
               shrinkWrap: true,
               children: itemController.listItem
                   .map(
-                    (item) => Container(
-                      margin: const EdgeInsets.only(right: 10),
-                      child: CardItem(itemModel: item),
-                    ),
+                    (item) => (item.title == 'Legen')
+                        ? const SizedBox()
+                        : Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            child: CardItem(itemModel: item),
+                          ),
                   )
                   .toList(),
             ),

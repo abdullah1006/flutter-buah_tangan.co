@@ -56,9 +56,10 @@ class CustomDrawer extends StatelessWidget {
                 onTap: () => drawC.goToWhislist(),
                 srcImage: 'assets/icons/heart.svg'),
             ButtonDrawer(
-                label: 'Pengaturan',
-                onTap: () => drawC.goToSettings(),
-                srcImage: 'assets/icons/setting.svg'),
+              label: 'Profile',
+              onTap: () => drawC.goToProfile(),
+              srcImage: 'assets/icons/profile.svg',
+            ),
           ],
         ),
       ),
@@ -89,6 +90,7 @@ class ButtonDrawer extends StatelessWidget {
             srcImage,
             width: 24,
             height: 24,
+            color: Colors.white,
           ),
           title: Text(
             label,

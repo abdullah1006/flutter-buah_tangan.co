@@ -1,3 +1,4 @@
+import 'package:buah_tangan_co/common/routes.dart';
 import 'package:buah_tangan_co/controller/bag_controller.dart';
 import 'package:buah_tangan_co/themes/font_style.dart';
 import 'package:buah_tangan_co/views/shopping_bag/component/card_bag_item.dart';
@@ -25,7 +26,7 @@ class ShoppingBagPage extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () => Get.toNamed(AppRoute.wishlistRoute),
               icon: SvgPicture.asset(
                 'assets/icons/heart.svg',
                 color: Colors.black,
@@ -34,7 +35,7 @@ class ShoppingBagPage extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () => Get.toNamed(AppRoute.profileRoute),
               icon: SvgPicture.asset('assets/icons/profile.svg'),
             )
           ],
@@ -68,7 +69,7 @@ class ShoppingBagPage extends StatelessWidget {
                         width: double.infinity,
                         color: const Color(0xffF0F0F0),
                       ),
-                  itemCount: length + 2),
+                  itemCount: 1),
             ),
           ],
         ),

@@ -1,10 +1,19 @@
+import 'package:buah_tangan_co/common/routes.dart';
 import 'package:buah_tangan_co/model/item_model.dart';
+import 'package:buah_tangan_co/widget/dialog_notif.dart';
 import 'package:get/get.dart';
 
 class DetItemController extends GetxController {
   var counter = 0.obs;
   void increment() => counter++;
   void decrement() => counter--;
+
+  void addToShoppingBag() {
+    Get.dialog(const AlertDialogNotif(
+        title: 'Berhasil Menambahkan Ke Keranjang',
+        srcImages: 'assets/images/notif_succes.png'));
+    Future.delayed(const Duration(seconds: 1)).then((value) => Get.back());
+  }
 
   RxList<ItemModel> listItem = [
     ItemModel(

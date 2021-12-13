@@ -57,14 +57,15 @@ class OrderingPage extends StatelessWidget {
               ListView.separated(
                   shrinkWrap: true,
                   primary: false,
-                  itemBuilder: (context, index) => const CardOrdering(),
+                  itemBuilder: (context, index) =>
+                      CardOrdering(data: orderingC.listItem[index]),
                   separatorBuilder: (context, index) => Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         height: 1,
                         width: double.infinity,
                         color: const Color(0xffF0F0F0),
                       ),
-                  itemCount: 2),
+                  itemCount: orderingC.listItem.length),
               const SizedBox(
                 height: 20,
               ),
@@ -122,9 +123,14 @@ class OrderingPage extends StatelessWidget {
                     style: mediumLoraBlackStyle.copyWith(fontSize: 14),
                   ),
                   const Spacer(),
-                  Text(
-                    ConvertCurrency.rpFormating(15000),
-                    style: boldLoraBlackStyle,
+                  Obx(
+                    () => Text(
+                      (orderingC.biayaKirim.value != 0)
+                          ? ConvertCurrency.rpFormating(
+                              orderingC.biayaKirim.value)
+                          : '-',
+                      style: boldLoraBlackStyle,
+                    ),
                   ),
                 ],
               ),
@@ -182,18 +188,24 @@ class OrderingPage extends StatelessWidget {
                 'Rincian',
                 style: boldLoraBlackStyle.copyWith(fontSize: 14),
               ),
-              Row(
-                children: [
-                  Text(
-                    'Nasi Krawu (1 Barang)',
-                    style: mediumLoraBlackStyle.copyWith(fontSize: 12),
-                  ),
-                  const Spacer(),
-                  Text(
-                    ConvertCurrency.rpFormating(15000),
-                    style: mediumLoraBlackStyle,
-                  ),
-                ],
+              Column(
+                children: orderingC.listItem.map((item) {
+                  return Row(
+                    children: [
+                      Text(
+                        '${item.title} (1 Barang)',
+                        style: mediumLoraBlackStyle.copyWith(fontSize: 12),
+                      ),
+                      const Spacer(),
+                      Text(
+                        (item.price != 0)
+                            ? ConvertCurrency.rpFormating(item.price)
+                            : '-',
+                        style: mediumLoraBlackStyle,
+                      ),
+                    ],
+                  );
+                }).toList(),
               ),
               Row(
                 children: [
@@ -202,10 +214,13 @@ class OrderingPage extends StatelessWidget {
                     style: mediumLoraBlackStyle.copyWith(fontSize: 12),
                   ),
                   const Spacer(),
-                  Text(
-                    ConvertCurrency.rpFormating(9000),
-                    style: mediumLoraBlackStyle,
-                  ),
+                  Obx(() => Text(
+                        (orderingC.biayaKirim.value != 0)
+                            ? ConvertCurrency.rpFormating(
+                                orderingC.biayaKirim.value)
+                            : '-',
+                        style: mediumLoraBlackStyle,
+                      )),
                 ],
               ),
               Row(
@@ -231,10 +246,12 @@ class OrderingPage extends StatelessWidget {
                     style: mediumLoraBlackStyle.copyWith(fontSize: 16),
                   ),
                   const Spacer(),
-                  Text(
-                    ConvertCurrency.rpFormating(26000),
-                    style: boldLoraBlackStyle.copyWith(fontSize: 16),
-                  ),
+                  Obx(() => Text(
+                        (orderingC.total.value != 0)
+                            ? ConvertCurrency.rpFormating(orderingC.total.value)
+                            : '-',
+                        style: boldLoraBlackStyle.copyWith(fontSize: 16),
+                      )),
                 ],
               ),
               const SizedBox(
@@ -247,7 +264,7 @@ class OrderingPage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     primary: const Color(0xff507957),
                   ),
-                  onPressed: () {},
+                  onPressed: () => orderingC.bayar(),
                   child: Text(
                     'Bayar',
                     style: boldLoraWhiteStyle.copyWith(fontSize: 14),

@@ -1,3 +1,5 @@
+import 'package:buah_tangan_co/common/routes.dart';
+import 'package:buah_tangan_co/controller/wishlist_controller.dart';
 import 'package:buah_tangan_co/themes/font_style.dart';
 import 'package:buah_tangan_co/views/shopping_bag/component/card_bag_shop.dart';
 import 'package:buah_tangan_co/views/wishlist/component/card_wishtlist.dart';
@@ -10,7 +12,7 @@ class WishlistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int length = 2;
+    final wishlistC = Get.put(WishlistController());
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -21,7 +23,7 @@ class WishlistPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => Get.toNamed(AppRoute.shoppingBagRoute),
             icon: SvgPicture.asset(
               'assets/icons/shopping_bag.svg',
               color: Colors.black,
@@ -30,7 +32,7 @@ class WishlistPage extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () => Get.toNamed(AppRoute.profileRoute),
             icon: SvgPicture.asset('assets/icons/profile.svg'),
           )
         ],
@@ -40,29 +42,30 @@ class WishlistPage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Text(
-              '3 Barang Wishlist',
-              style: boldLoraBlackStyle.copyWith(fontSize: 14),
-            ),
+            child: Obx(() => Text(
+                  '${wishlistC.listItem.length} Barang Wishlist',
+                  style: boldLoraBlackStyle.copyWith(fontSize: 14),
+                )),
           ),
           Container(
             height: 5,
             width: double.infinity,
             color: const Color(0xffF0F0F0),
           ),
-          Expanded(
-            child: ListView.separated(
-                padding: const EdgeInsets.only(top: 20, bottom: 20),
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => CardWishlist(),
-                separatorBuilder: (context, index) => Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      height: 1,
-                      width: double.infinity,
-                      color: const Color(0xffF0F0F0),
-                    ),
-                itemCount: length + 5),
-          ),
+          Obx(() => Expanded(
+                child: ListView.separated(
+                    padding: const EdgeInsets.only(top: 20, bottom: 20),
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) =>
+                        CardWishlist(data: wishlistC.listItem[index]),
+                    separatorBuilder: (context, index) => Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          height: 1,
+                          width: double.infinity,
+                          color: const Color(0xffF0F0F0),
+                        ),
+                    itemCount: wishlistC.listItem.length),
+              )),
         ],
       ),
     );

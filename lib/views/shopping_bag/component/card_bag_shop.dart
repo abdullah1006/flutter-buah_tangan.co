@@ -10,7 +10,7 @@ class CardBagShop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bagC = Get.find<BagController>();
-    int length = 2;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,28 +40,28 @@ class CardBagShop extends StatelessWidget {
         ),
 
         //Note : Card Barang per Toko
-        ListView.separated(
-          shrinkWrap: true,
-          primary: false,
-          itemCount: length,
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          separatorBuilder: (context, index) {
-            if (index == length - 1) {
-              return const SizedBox();
-            }
-            return Container(
-              height: 1,
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              color: const Color(0xffF0F0F0),
-            );
-          },
-          itemBuilder: (context, index) {
-            return const Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: CardBagItem(),
-            );
-          },
-        ),
+        Obx(() => ListView.separated(
+              shrinkWrap: true,
+              primary: false,
+              itemCount: bagC.item.length,
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              separatorBuilder: (context, index) {
+                if (index == bagC.item.length - 1) {
+                  return const SizedBox();
+                }
+                return Container(
+                  height: 1,
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  color: const Color(0xffF0F0F0),
+                );
+              },
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: CardBagItem(item: bagC.item[index]),
+                );
+              },
+            )),
       ],
     );
   }

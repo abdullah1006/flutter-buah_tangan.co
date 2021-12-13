@@ -183,7 +183,8 @@ class _DetailItemPageState extends State<DetailItemPage> {
                             height: 30,
                             width: 100,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () =>
+                                  itemController.addToShoppingBag(),
                               child: Text(
                                 'Add to Cart',
                                 style:

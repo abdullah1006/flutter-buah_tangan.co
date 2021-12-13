@@ -1,14 +1,19 @@
+import 'package:buah_tangan_co/controller/wishlist_controller.dart';
+import 'package:buah_tangan_co/model/item_model.dart';
 import 'package:buah_tangan_co/themes/font_style.dart';
 import 'package:buah_tangan_co/util/convert_currency.dart';
 import 'package:buah_tangan_co/widget/rating_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class CardWishlist extends StatelessWidget {
-  const CardWishlist({Key? key}) : super(key: key);
+  final ItemModel data;
+  const CardWishlist({required this.data, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final wishlistC = Get.find<WishlistController>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -20,7 +25,7 @@ class CardWishlist extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.asset(
-                    'assets/images/nasi_krawu.png',
+                    'assets/images/${data.src}',
                     height: 84,
                   ),
                 ),
@@ -32,15 +37,15 @@ class CardWishlist extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Nasi Krawu',
+                      data.title,
                       style: regLoraBlackStyle.copyWith(fontSize: 16),
                     ),
                     Text(
-                      ConvertCurrency.rpFormating(10000),
+                      ConvertCurrency.rpFormating(data.price),
                       style: boldLoraBlackStyle,
                     ),
                     RatingItem(
-                      rating: 5,
+                      rating: data.rating,
                     ),
                     Text(
                       'Kota Gresik',
@@ -60,7 +65,7 @@ class CardWishlist extends StatelessWidget {
                 height: 28,
                 width: 38,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => wishlistC.removeItem(data),
                   child: SvgPicture.asset(
                     'assets/icons/trash.svg',
                   ),
@@ -85,7 +90,7 @@ class CardWishlist extends StatelessWidget {
                 child: SizedBox(
                   height: 28,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => wishlistC.addToShoppingBag(data),
                     child: Text(
                       'Tambah Ke Keranjang',
                       style: mediumLoraWhiteStyle.copyWith(fontSize: 12),

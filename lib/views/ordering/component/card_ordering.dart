@@ -1,3 +1,4 @@
+import 'package:buah_tangan_co/model/item_model.dart';
 import 'package:buah_tangan_co/themes/font_style.dart';
 import 'package:buah_tangan_co/util/convert_currency.dart';
 import 'package:buah_tangan_co/widget/rating_item.dart';
@@ -5,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CardOrdering extends StatelessWidget {
-  const CardOrdering({Key? key}) : super(key: key);
+  final ItemModel data;
+  const CardOrdering({required this.data, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class CardOrdering extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Image.asset(
-                  'assets/images/nasi_krawu.png',
+                  'assets/images/${data.src}',
                   height: 84,
                 ),
               ),
@@ -45,7 +47,7 @@ class CardOrdering extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Nasi Krawu',
+                    data.title,
                     style: regLoraBlackStyle.copyWith(fontSize: 16),
                   ),
                   Text(
@@ -53,7 +55,7 @@ class CardOrdering extends StatelessWidget {
                     style: regLoraBlackStyle.copyWith(fontSize: 12),
                   ),
                   Text(
-                    ConvertCurrency.rpFormating(10000),
+                    ConvertCurrency.rpFormating(data.price),
                     style: boldLoraBlackStyle,
                   ),
                 ],

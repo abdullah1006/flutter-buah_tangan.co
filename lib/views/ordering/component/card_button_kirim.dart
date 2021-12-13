@@ -23,7 +23,10 @@ class CardButtonKirim extends StatelessWidget {
               minVerticalPadding: 0,
               onTap: () {
                 Get.back();
+                orderC.total.value = orderC.initTotal.value;
                 orderC.pengiriman.value = listType[index];
+                orderC.biayaKirim.value = listHarga[index];
+                orderC.total.value = orderC.total.value + listHarga[index];
               },
               dense: true,
               title: Text(

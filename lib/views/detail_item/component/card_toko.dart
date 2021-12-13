@@ -1,3 +1,4 @@
+import 'package:buah_tangan_co/common/routes.dart';
 import 'package:buah_tangan_co/themes/font_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -59,7 +60,7 @@ class CardToko extends StatelessWidget {
           const Spacer(),
           TextButton(
             onPressed: () {
-              Get.toNamed('/detailToko');
+              Get.toNamed(AppRoute.detailTokoRoute);
             },
             child: Text(
               'Kunjungi Toko',

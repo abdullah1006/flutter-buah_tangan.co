@@ -4,8 +4,9 @@ import 'package:buah_tangan_co/views/detail_item/detail_item_page.dart';
 import 'package:buah_tangan_co/views/detail_toko/detail_toko_page.dart';
 import 'package:buah_tangan_co/views/home/home_page.dart';
 import 'package:buah_tangan_co/views/ordering/ordering_page.dart';
-import 'package:buah_tangan_co/views/settings/settings_page.dart';
+import 'package:buah_tangan_co/views/profile/profile_page.dart';
 import 'package:buah_tangan_co/views/shopping_bag/bag_page.dart';
+import 'package:buah_tangan_co/views/splash/splash_page.dart';
 import 'package:buah_tangan_co/views/wishlist/wishlist_page.dart';
 import 'package:get/get.dart';
 
@@ -16,9 +17,10 @@ class AppRoute {
   static const String detailChatRoute = '/detailChatPage';
   static const String chatRoute = '/chatPage';
   static const String shoppingBagRoute = '/shoppingBagPage';
-  static const String settingsRoute = '/settingsPage';
+  static const String profileRoute = '/profileRoute';
   static const String wishlistRoute = '/wishlistPage';
   static const String orderingRoute = '/orderingRoute';
+  static const String splashRoute = '/splashRoute';
 
   static List<GetPage<dynamic>> route = [
     GetPage(name: homeRoute, page: () => const HomePage()),
@@ -47,12 +49,16 @@ class AppRoute {
         page: () => const WishlistPage(),
         transition: Transition.rightToLeftWithFade),
     GetPage(
-        name: settingsRoute,
-        page: () => const SettingsPage(),
+        name: profileRoute,
+        page: () => const ProfilePage(),
         transition: Transition.rightToLeftWithFade),
     GetPage(
         name: orderingRoute,
         page: () => const OrderingPage(),
+        transition: Transition.rightToLeftWithFade),
+    GetPage(
+        name: splashRoute,
+        page: () => SplashPage(),
         transition: Transition.rightToLeftWithFade),
   ];
 }

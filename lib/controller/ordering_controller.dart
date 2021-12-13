@@ -1,17 +1,42 @@
 import 'package:buah_tangan_co/common/pay_type.dart';
+import 'package:buah_tangan_co/common/routes.dart';
+import 'package:buah_tangan_co/model/item_model.dart';
 import 'package:buah_tangan_co/themes/font_style.dart';
 import 'package:buah_tangan_co/views/ordering/component/card_button_bayar.dart';
 import 'package:buah_tangan_co/views/ordering/component/card_button_kirim.dart';
+import 'package:buah_tangan_co/widget/dialog_notif.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class OrderingController extends GetxController {
   var pembayaran = ''.obs;
   var pengiriman = ''.obs;
+  var biayaKirim = 0.obs;
+  var biayaAdmin = 0.obs;
+  var total = 0.obs;
+  var initTotal = 0.obs;
 
   List<String> pengirimanType = ['Express', 'Reguler', 'Ekonomi'];
   List<int> hargaKirim = [14000, 9000, 6000];
+
+  RxList<ItemModel> listItem = [
+    ItemModel(
+      index: 3,
+      title: 'Nasi Krawu',
+      src: 'nasi_krawu.png',
+      rating: 5,
+      price: 12000,
+      favorite: false,
+    ),
+    ItemModel(
+      index: 1,
+      title: 'Kue Pudak',
+      src: 'kue_pudak.png',
+      rating: 4,
+      price: 6000,
+      favorite: false,
+    ),
+  ].obs;
 
   void pilihPengiriman() {
     Get.bottomSheet(
@@ -97,10 +122,40 @@ class OrderingController extends GetxController {
     );
   }
 
+  void bayar() {
+    bool status = (pembayaran.value != 'Pilih Pembayaran' &&
+        pengiriman.value != 'Pilih Pengiriman');
+    if (status) {
+      Get.dialog(
+        const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+      Future.delayed(const Duration(seconds: 1)).then((value) => Get.back());
+      Get.dialog(const AlertDialogNotif(
+          title: 'Berhasil Membayar',
+          srcImages: 'assets/images/notif_succes.png'));
+      Future.delayed(const Duration(seconds: 1)).then((value) {
+        Get.offAllNamed(AppRoute.homeRoute);
+      });
+    } else {
+      Get.dialog(const AlertDialogNotif(
+          title: 'Lengkapi Pesanan Anda',
+          srcImages: 'assets/images/notif_failed.png'));
+      Future.delayed(const Duration(seconds: 1)).then((value) {
+        Get.back();
+      });
+    }
+  }
+
   @override
   void onInit() {
     pembayaran.value = 'Pilih Pembayaran';
     pengiriman.value = 'Pilih Pengiriman';
+    for (var element in listItem) {
+      total.value = total.value + element.price;
+    }
+    initTotal.value = total.value;
     super.onInit();
   }
 }

@@ -1,11 +1,13 @@
 import 'package:buah_tangan_co/controller/bag_controller.dart';
 import 'package:buah_tangan_co/themes/font_style.dart';
+import 'package:buah_tangan_co/util/convert_currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class CardBagItem extends StatelessWidget {
-  const CardBagItem({Key? key}) : super(key: key);
+  final ItemBagModel item;
+  const CardBagItem({required this.item, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +17,10 @@ class CardBagItem extends StatelessWidget {
         Row(
           children: [
             Obx(() => Checkbox(
-                  value: bagC.checkAll.value,
-                  onChanged: (value) => bagC.setCheckAll(),
+                  value: bagC.item.value
+                      .singleWhere((element) => element.id == item.id)
+                      .onCheck,
+                  onChanged: (value) => bagC.checkItem(item),
                 )),
             const SizedBox(
               width: 10,
@@ -25,7 +29,7 @@ class CardBagItem extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: Image.asset(
-                'assets/images/nasi_krawu.png',
+                item.srcGambar,
                 height: 54,
               ),
             ),
@@ -37,11 +41,11 @@ class CardBagItem extends StatelessWidget {
               children: [
                 //Note : Nama dan Harga
                 Text(
-                  'Nasi Krawu',
+                  item.nama,
                   style: regLoraBlackStyle.copyWith(fontSize: 14),
                 ),
                 Text(
-                  'Rp. 10.000',
+                  ConvertCurrency.rpFormating(item.harga),
                   style: boldLoraBlackStyle.copyWith(fontSize: 12),
                 )
               ],
@@ -52,7 +56,9 @@ class CardBagItem extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            SvgPicture.asset('assets/icons/trash.svg'),
+            GestureDetector(
+                onTap: () => bagC.delete(item),
+                child: SvgPicture.asset('assets/icons/trash.svg')),
             const SizedBox(
               width: 10,
             ),
@@ -68,15 +74,29 @@ class CardBagItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    '-',
-                    style: mediumLoraBlackStyle.copyWith(fontSize: 14),
+                  GestureDetector(
+                    onTap: () => bagC.decrement(item),
+                    child: Text(
+                      '-',
+                      style: mediumLoraBlackStyle.copyWith(fontSize: 14),
+                    ),
                   ),
-                  Text(
-                    '1',
-                    style: mediumLoraBlackStyle.copyWith(fontSize: 14),
+                  Obx(
+                    () => Text(
+                      bagC.item
+                          .singleWhere((element) => element.id == item.id)
+                          .jumlah
+                          .toString(),
+                      style: mediumLoraBlackStyle.copyWith(fontSize: 14),
+                    ),
                   ),
-                  Text('+', style: mediumLoraBlackStyle.copyWith(fontSize: 14)),
+                  GestureDetector(
+                    onTap: () => bagC.increment(item),
+                    child: Text(
+                      '+',
+                      style: mediumLoraBlackStyle.copyWith(fontSize: 14),
+                    ),
+                  ),
                 ],
               ),
             ),

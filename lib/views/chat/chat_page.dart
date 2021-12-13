@@ -48,7 +48,7 @@ class _ChatPageState extends State<ChatPage>
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => Get.toNamed(AppRoute.profileRoute),
             icon: SvgPicture.asset('assets/icons/profile.svg'),
           )
         ],
