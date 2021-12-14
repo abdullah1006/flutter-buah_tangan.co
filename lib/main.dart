@@ -1,11 +1,6 @@
 import 'package:buah_tangan_co/common/routes.dart';
 import 'package:buah_tangan_co/controller/chat_controller.dart';
 import 'package:buah_tangan_co/controller/detail_item_controller.dart';
-import 'package:buah_tangan_co/views/chat/chat_page.dart';
-import 'package:buah_tangan_co/views/chat/detail_chat_page.dart';
-import 'package:buah_tangan_co/views/detail_item/detail_item_page.dart';
-import 'package:buah_tangan_co/views/detail_toko/detail_toko_page.dart';
-import 'package:buah_tangan_co/views/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
